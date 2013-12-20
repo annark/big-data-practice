@@ -1,6 +1,10 @@
 '''
+Anna Russo Kennedy
+
 Simple MapReduce framework.
-From UVic CSC485c course, based on Coursera Big Data assignment files.
+
+Heavily based on assignment files from UVic CSC485c course/Coursera Big Data, with small modifications
+for file writing/output.
 '''
 
 import sys
