@@ -1,3 +1,8 @@
+'''
+Simple MapReduce framework.
+From UVic CSC485c course, based on Coursera Big Data assignment files.
+'''
+
 import sys
 import csv
 

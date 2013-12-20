@@ -1,19 +1,10 @@
 """
 Anna Russo Kennedy
 
-Mapper Input
-The input is a 2 element list: [document_id, text]
-document_id: document identifier formatted as a string
-text: text of the document formatted as a string
-The document text may have words in various cases or elements of punctuation. Do not modify the
-string, and treat each token as if it was a valid word. (That is, just use value.split())
+MapReduce script that filters and sorts the given CSV file of anonymized patient data.
 
-Reducer Output
-The output should be a (word, document ID list) tuple where word is a String and document ID list
-is a list of Strings.
-
-Run usig:
-python record_formatter.py training_SyncDiagnosis.csv
+Usage:
+python record_formatter.py patients_diagnoses.csv
 """
 
 import MapReduce
@@ -25,9 +16,7 @@ mr = MapReduce.MapReduce()
 
 # Part 2 
 def mapper(record):
-    # key: document identifier
-    # value: document contents
-    # Column format:
+    # Record format:
     #   0           1           2           3               4           5           6       7
     #   recordID    PatientId   ICD9 Code   Diagnosis desc. Startyear   Stopyear    Acute   DrID
     patient_id = record[1]
@@ -41,17 +30,18 @@ def mapper(record):
 def reducer(key, list_of_values):
     # key: patient_id
     # list_of_values: list of diagnoses for patient
-    # List format:
-    # 0             1         2         3       4   5    6
-    # patient_id    cancers   diabetes  stress  MS  IBS  Arthritis
 
-    # Following are ICD classification codes we are interested in:
+    # Following are the ICD classification codes we are interested in:
     # neoplasms (cancers): 140-239
     # diabetes: 249,250
     # stress (and related): 308, 309
     # MS: 340
     # IBS: 564.1
     # arthritis: 710-719
+
+    # list_of_diagnoses format:
+    # 0           1         2         3       4   5    6
+    # patient_id  cancers   diabetes  stress  MS  IBS  Arthritis
     list_of_diagnoses = [0 for i in range(7)]
     list_of_diagnoses[0] = key
 
